@@ -1,6 +1,6 @@
 ﻿namespace PuntosExtra.Reportes
 {
-    partial class ReporteDeNotasDeEstudiantes
+    partial class ReporteDeNotasDeCredito
     {
         /// <summary>
         /// Required designer variable.
@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.crystalReportViewer1 = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
+            this.cachedEstudiantesCrystalReport1 = new PuntosExtra.Reportes.CachedEstudiantesCrystalReport();
             this.SuspendLayout();
             // 
             // crystalReportViewer1
@@ -42,14 +43,16 @@
             this.crystalReportViewer1.Size = new System.Drawing.Size(432, 351);
             this.crystalReportViewer1.TabIndex = 0;
             // 
-            // ReporteDeNotasDeEstudiantes
+            // ReporteDeNotasDeCredito
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(432, 351);
             this.Controls.Add(this.crystalReportViewer1);
-            this.Name = "ReporteDeNotasDeEstudiantes";
+            this.Name = "ReporteDeNotasDeCredito";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ReporteDeNotasDeEstudiantes";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.ReporteDeNotasDeEstudiantes_Load);
             this.ResumeLayout(false);
 
@@ -58,5 +61,6 @@
         #endregion
 
         private CrystalDecisions.Windows.Forms.CrystalReportViewer crystalReportViewer1;
+        private CachedEstudiantesCrystalReport cachedEstudiantesCrystalReport1;
     }
 }

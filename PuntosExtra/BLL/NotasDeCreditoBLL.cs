@@ -11,14 +11,22 @@ namespace PuntosExtra.BLL
 {
     public class NotasDeCreditoBLL
     {
-        public static bool Guardar(NotasDeCredito estudiante)
+        public static decimal M = 0;
+
+        public static bool Guardar(NotasDeCredito nc)
         {
             bool paso = false;
             try
             {
                 ContextoNotasDeCredito Contex = new ContextoNotasDeCredito();
-                Contex.Notas.Add(estudiante);
+                Estudiantes es = BLL.EstudiantesBLL.Buscar(nc.estudianteID);
+                
+                es.montoDescuento += nc.monto;
+
+                BLL.EstudiantesBLL.Modificar(es);
+                Contex.Notas.Add(nc);
                 Contex.SaveChanges();
+                
                 paso = true;
             }
             catch (Exception)
@@ -28,16 +36,19 @@ namespace PuntosExtra.BLL
             return paso;
         }
 
-        public static bool Eliminar(int estudianteID)
+        public static bool Eliminar(int ID)
         {
             bool paso = false;
 
             try
             {
                 ContextoNotasDeCredito contex = new ContextoNotasDeCredito();
+                NotasDeCredito nc = contex.Notas.Find(ID);
+                Estudiantes es = BLL.EstudiantesBLL.Buscar(nc.estudianteID);
+                es.montoDescuento -= nc.monto;
 
-                var estudiante = contex.Notas.Find(estudianteID);
-
+                var estudiante = contex.Notas.Find(ID);
+                BLL.EstudiantesBLL.Modificar(es);
                 contex.Notas.Remove(estudiante);
                 contex.SaveChanges();
 
@@ -59,6 +70,9 @@ namespace PuntosExtra.BLL
             {
                 ContextoNotasDeCredito contex = new ContextoNotasDeCredito();
                 NotaCredito = contex.Notas.Find(EstudianteId);
+
+                if (NotaCredito != null)
+                    M = NotaCredito.monto;
             }
             catch (Exception)
             {
@@ -75,13 +89,15 @@ namespace PuntosExtra.BLL
             try
             {
                 ContextoNotasDeCredito contex = new ContextoNotasDeCredito();
+                Estudiantes es = BLL.EstudiantesBLL.Buscar(nota.estudianteID);
 
+                es.montoDescuento -= M;
                 contex.Entry(nota).State = EntityState.Modified;
-                if (contex.SaveChanges() > 0)
-                {
-                    paso = true;
-                }
+                es.montoDescuento += nota.monto;
+                contex.SaveChanges();
+                BLL.EstudiantesBLL.Modificar(es);
 
+                paso = true;
             }
             catch (Exception)
             {

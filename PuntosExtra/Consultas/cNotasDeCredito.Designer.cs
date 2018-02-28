@@ -127,6 +127,7 @@
             this.Controls.Add(this.FiltrarcomboBox);
             this.Controls.Add(this.NotasDeCreditodataGridView);
             this.Name = "cNotasDeCredito";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Consulta de Notas De Credito";
             this.Load += new System.EventHandler(this.cNotasDeCredito_Load);
             ((System.ComponentModel.ISupportInitialize)(this.NotasDeCreditodataGridView)).EndInit();

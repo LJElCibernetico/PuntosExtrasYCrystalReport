@@ -23,19 +23,23 @@ namespace PuntosExtra.Consultas
         private void buscarbutton_Click(object sender, EventArgs e)
         {
             int ID;
+            decimal monto;
             Expression<Func<NotasDeCredito, bool>> all = x => true;
             
-            int.TryParse(CriteriotextBox.Text, out ID);
-            
             if (FiltrarcomboBox.SelectedIndex == 0)
+            {
+                ID = int.Parse(CriteriotextBox.Text);
                 lista = BLL.NotasDeCreditoBLL.GetList(t => t.notasID == ID);
+                all = x => x.notasID == ID;
+            }
+
             if (FiltrarcomboBox.SelectedIndex == 1)
             {
-                int montoa = 0;
-                int.TryParse(CriteriotextBox.Text, out montoa);
-
-               lista = BLL.NotasDeCreditoBLL.GetList(nc => nc.montoAsignatura == montoa);
+               monto = decimal.Parse(CriteriotextBox.Text);
+               lista = BLL.NotasDeCreditoBLL.GetList(nc => nc.montoAsignatura == monto);
+               all = x => x.montoAsignatura == monto;
             }
+
             if(FiltrarcomboBox.Text == string.Empty || CriteriotextBox.Text == string.Empty)
                 lista = BLL.NotasDeCreditoBLL.GetList(all);
 
@@ -49,8 +53,8 @@ namespace PuntosExtra.Consultas
 
         private void imprimirbutton_Click(object sender, EventArgs e)
         {
-            ReporteDeNotasDeEstudiantes rne = new ReporteDeNotasDeEstudiantes(lista);
-            rne.Show();
+            ReporteDeNotasDeCredito rnc = new ReporteDeNotasDeCredito(lista);
+            rnc.Show();
         }
     }
 }

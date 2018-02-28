@@ -107,11 +107,11 @@
       <DependentUpon>NotasDeCreditoCrystalReport.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reportes\ReporteDeNotasDeEstudiantes.cs">
+    <Compile Include="Reportes\ReporteDeNotasDeCredito.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Reportes\ReporteDeNotasDeEstudiantes.Designer.cs">
-      <DependentUpon>ReporteDeNotasDeEstudiantes.cs</DependentUpon>
+    <Compile Include="Reportes\ReporteDeNotasDeCredito.Designer.cs">
+      <DependentUpon>ReporteDeNotasDeCredito.cs</DependentUpon>
     </Compile>
     <Compile Include="Reportes\ReporteEstudiantes.cs">
       <SubType>Form</SubType>
@@ -152,8 +152,8 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>NotasDeCreditoCrystalReport.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\ReporteDeNotasDeEstudiantes.resx">
-      <DependentUpon>ReporteDeNotasDeEstudiantes.cs</DependentUpon>
+    <EmbeddedResource Include="Reportes\ReporteDeNotasDeCredito.resx">
+      <DependentUpon>ReporteDeNotasDeCredito.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\ReporteEstudiantes.resx">
       <DependentUpon>ReporteEstudiantes.cs</DependentUpon>

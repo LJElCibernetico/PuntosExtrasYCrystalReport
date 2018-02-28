@@ -277,6 +277,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "rNotasDeCredito";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Registro de Notas De Credito";
             this.Load += new System.EventHandler(this.rNotasDeCredito_Load);
             ((System.ComponentModel.ISupportInitialize)(this.idnumericUpDown)).EndInit();

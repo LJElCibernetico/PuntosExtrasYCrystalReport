@@ -11,10 +11,10 @@ using System.Windows.Forms;
 
 namespace PuntosExtra.Reportes
 {
-    public partial class ReporteDeNotasDeEstudiantes : Form
+    public partial class ReporteDeNotasDeCredito : Form
     {
         List<NotasDeCredito> lista = new List<NotasDeCredito>();
-        public ReporteDeNotasDeEstudiantes(List<NotasDeCredito> listas)
+        public ReporteDeNotasDeCredito(List<NotasDeCredito> listas)
         {
             lista = listas;
             InitializeComponent();

@@ -20,15 +20,12 @@ namespace PuntosExtra.Registros
 
         private void guardarbutton_Click(object sender, EventArgs e)
         {
-            int ID, ID1;
+            int ID;
             int.TryParse(idnumericUpDown.Text, out ID);
-            int.TryParse(estudianteidnumericUpDown.Text, out ID1);
             NotasDeCredito nc = BLL.NotasDeCreditoBLL.Buscar(ID);
-            Estudiantes es = BLL.EstudiantesBLL.Buscar(ID1);
             if (nc == null)
             {
                 NotasDeCredito nc1 = LlenarClase();
-                es.montoDescuento += nc1.monto;
 
                 if (fechadateTimePicker.Text == string.Empty || estudianteidnumericUpDown.Value == 0 || 
                     nombretextBox.Text == string.Empty || montoasignaturasnumericUpDown.Value == 0 || 
@@ -41,19 +38,13 @@ namespace PuntosExtra.Registros
             }
             else
             {
-                nc.fecha = fechadateTimePicker.Value;
-                nc.estudianteID = int.Parse(estudianteidnumericUpDown.Text);
-                nc.montoAsignatura = montoasignaturasnumericUpDown.Value;
-                nc.pctBeca = pctnumericUpDown.Value;
-                nc.monto = (montoasignaturasnumericUpDown.Value - (montoasignaturasnumericUpDown.Value * (pctnumericUpDown.Value / 100)));
-                es.montoDescuento += nc.monto;
+                mod(nc);
 
                 if (BLL.NotasDeCreditoBLL.Modificar(nc))
                     MessageBox.Show("Acaba de Modificar La Nota De Credito");
                 else
                     MessageBox.Show("No Se Pudo Modificar La Nota De Credito");
             }
-            BLL.EstudiantesBLL.Modificar(es);
             LimpiarTextBox();
         }
 
@@ -83,10 +74,19 @@ namespace PuntosExtra.Registros
             NC.estudianteID = b;
             NC.montoAsignatura = montoasignaturasnumericUpDown.Value;
             NC.pctBeca = pctnumericUpDown.Value;
-            MontoFinal = NC.montoAsignatura - (NC.montoAsignatura * (NC.pctBeca/100));
+            MontoFinal = (NC.montoAsignatura * (NC.pctBeca/100));
             NC.monto = MontoFinal;
 
             return NC;
+        }
+
+        private void mod(NotasDeCredito nc)
+        {
+            nc.fecha = fechadateTimePicker.Value;
+            nc.estudianteID = int.Parse(estudianteidnumericUpDown.Text);
+            nc.montoAsignatura = montoasignaturasnumericUpDown.Value;
+            nc.pctBeca = pctnumericUpDown.Value;
+            nc.monto = (montoasignaturasnumericUpDown.Value * (pctnumericUpDown.Value / 100));
         }
 
         private void LimpiarTextBox()
@@ -108,14 +108,13 @@ namespace PuntosExtra.Registros
         private void montoasignaturasnumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (montoasignaturasnumericUpDown.Value != 0)
-                montotextBox.Text = (montoasignaturasnumericUpDown.Value - (montoasignaturasnumericUpDown.Value * (pctnumericUpDown.Value / 100))).ToString();
-
+                montotextBox.Text = (montoasignaturasnumericUpDown.Value * (pctnumericUpDown.Value / 100)).ToString();
         }
 
         private void pctnumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (montoasignaturasnumericUpDown.Value != 0)
-                montotextBox.Text = (montoasignaturasnumericUpDown.Value-(montoasignaturasnumericUpDown.Value * (pctnumericUpDown.Value / 100))).ToString();
+                montotextBox.Text = (montoasignaturasnumericUpDown.Value * (pctnumericUpDown.Value / 100)).ToString();
         }
 
         private void buscarbutton_Click(object sender, EventArgs e)
@@ -130,11 +129,7 @@ namespace PuntosExtra.Registros
             if (Nota != null)
             {
                 MessageBox.Show("Nota de Credito Encontrada");
-                fechadateTimePicker.Value = Nota.fecha;
-                estudianteidnumericUpDown.Value = Convert.ToDecimal(Nota.estudianteID);
-                montoasignaturasnumericUpDown.Value = Convert.ToDecimal(Nota.montoAsignatura);
-                pctnumericUpDown.Value = Convert.ToDecimal(Nota.pctBeca);
-                montotextBox.Text = Nota.monto.ToString();
+                search(Nota);
 
                 if (BLL.EstudiantesBLL.Buscar(Nota.estudianteID) != null)
                 {
@@ -148,6 +143,15 @@ namespace PuntosExtra.Registros
             }
         }
 
+        private void search(NotasDeCredito Nota)
+        {
+            fechadateTimePicker.Value = Nota.fecha;
+            estudianteidnumericUpDown.Value = Convert.ToDecimal(Nota.estudianteID);
+            montoasignaturasnumericUpDown.Value = Convert.ToDecimal(Nota.montoAsignatura);
+            pctnumericUpDown.Value = Convert.ToDecimal(Nota.pctBeca);
+            montotextBox.Text = Nota.monto.ToString();
+        }
+
         private void nuevobutton_Click(object sender, EventArgs e)
         {
             LimpiarTextBox();
@@ -158,18 +162,13 @@ namespace PuntosExtra.Registros
             NotasDeCredito Nota = new NotasDeCredito();
 
             int ID;
-            int ID1;
             int.TryParse(idnumericUpDown.Text, out ID);
-            int.TryParse(estudianteidnumericUpDown.Text, out ID1);
-            Estudiantes es = BLL.EstudiantesBLL.Buscar(ID1);
             NotasDeCredito nc = BLL.NotasDeCreditoBLL.Buscar(ID);
-            es.montoDescuento -= nc.monto;
 
             if (BLL.NotasDeCreditoBLL.Eliminar(ID))
                 MessageBox.Show("Acaba de Eliminar Esta Nota de Credito");
             else
                 MessageBox.Show("No Puede Eliminar Una Nota de Credito Que No Existe");
-            BLL.EstudiantesBLL.Modificar(es);
             LimpiarTextBox();
         }
 
