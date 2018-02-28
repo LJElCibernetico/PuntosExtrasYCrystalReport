@@ -55,6 +55,7 @@ namespace PuntosExtra.Consultas
         {
             ReporteDeNotasDeCredito rnc = new ReporteDeNotasDeCredito(lista);
             rnc.Show();
+
         }
     }
 }
